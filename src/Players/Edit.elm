@@ -43,21 +43,21 @@ formLevel player =
 
 btnLevelDecrease : Player -> Html Msg
 btnLevelDecrease player =
-    btnLevel "minus" player
+    btnLevel "minus" (ChangeLevel player.id -1) player
 
 
 btnLevelIncrease : Player -> Html Msg
 btnLevelIncrease player =
-    btnLevel "plus" player
+    btnLevel "plus" (ChangeLevel player.id 1) player
 
 
-btnLevel : String -> Player -> Html Msg
-btnLevel cirlceClass player =
+btnLevel : String -> Msg -> Player -> Html Msg
+btnLevel cirlceClass msg player =
     let
         pickedCircleClass =
             "fa fa-" ++ cirlceClass ++ "-circle"
     in
-        a [ class "btn ml1 h1" ]
+        a [ class "btn ml1 h1", onClick msg ]
             [ i [ class pickedCircleClass ] [] ]
 
 
