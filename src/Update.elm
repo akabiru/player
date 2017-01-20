@@ -1,5 +1,6 @@
 module Update exposing (..)
 
+import Routing exposing (parseLocation)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Players.Update
@@ -21,3 +22,10 @@ update msg model =
                     Players.Update.update subMsg model.players
             in
                 ( { model | players = updatedPlayers }, Cmd.map PlayerMsg cmd )
+
+        OnLocationChange location ->
+            let
+                newRoute =
+                    parseLocation location
+            in
+                ( { model | route = newRoute }, Cmd.none )

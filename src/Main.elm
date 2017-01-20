@@ -6,12 +6,18 @@ import Models exposing (Model, initialModel)
 import Update exposing (update)
 import View exposing (view)
 import Players.Commands exposing (fetchAll)
+import Navigation exposing (Location)
+import Routing exposing (Route)
 
 {- Returns a list of commands when the app starts
 -}
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Cmd.map PlayerMsg fetchAll )
+init : Location -> ( Model, Cmd Msg )
+init location =
+    let
+        currentRoute =
+            Routing.parseLocation location
+    in
+        ( initialModel currentRoute, Cmd.map PlayerMsg fetchAll )
 
 
 
@@ -29,7 +35,7 @@ subscriptions model =
 
 main : Program Never Model Msg
 main =
-    program
+    Navigation.program OnLocationChange
         { init = init
         , view = view
         , update = update
